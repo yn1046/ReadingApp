@@ -1,0 +1,11 @@
+﻿<Window x:Class="_001.Change"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Сменить пользователя" Height="188.346" Width="359.774" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+    <Grid>
+        <Label Content="Вы действительно хотите сменить пользователя?" HorizontalAlignment="Left" Margin="33,10,0,0" VerticalAlignment="Top" Height="31" Width="288"/>
+        <Button Content="Сменить" HorizontalAlignment="Left" Margin="72,97,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" Cursor="Hand" IsDefault="True"/>
+        <Button Content="Отмена" HorizontalAlignment="Left" Margin="199,97,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1" Cursor="Hand" IsCancel="True"/>
+
+    </Grid>
+</Window>

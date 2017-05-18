@@ -1,0 +1,15 @@
+﻿<Window x:Class="_001.Reg"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Reg" Height="290.667" Width="338.667" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+    <Grid>
+        <Label Content="Логин" HorizontalAlignment="Left" Margin="95,55,0,0" VerticalAlignment="Top" />
+        <Label Content="Пароль" HorizontalAlignment="Left" Margin="88,86,0,0" VerticalAlignment="Top" />
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="152,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" x:Name="Login" />
+        <PasswordBox HorizontalAlignment="Left" Margin="152,86,0,0" VerticalAlignment="Top" Width="120" Height="25" x:Name="Password" />
+        <Label Content="Повторить пароль" HorizontalAlignment="Left" Margin="27,115,0,0" VerticalAlignment="Top" Width="112" />
+        <PasswordBox HorizontalAlignment="Left" Margin="152,116,0,0" VerticalAlignment="Top" Width="120" Height="25" x:Name="RepeatPassword" />
+        <Button Content="Зарегестрироваться" HorizontalAlignment="Left" Margin="152,167,0,0" VerticalAlignment="Top" Width="120" Click="Button_Click" Height="25" Cursor="Hand" />
+
+    </Grid>
+</Window>
