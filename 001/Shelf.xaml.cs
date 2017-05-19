@@ -50,7 +50,7 @@ namespace _001
         {
             if (!string.IsNullOrEmpty(SelectedBook.Name))
             {
-                Read read = new Read(CurrentUser, Text);
+                Read read = new Read(CurrentUser, SelectedBook, Text);
                 read.Show();
                 this.Close();
             }
@@ -65,9 +65,6 @@ namespace _001
                 changed.Show();
                 this.Close();
             }
-
-            //c.Show();
-
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -79,9 +76,25 @@ namespace _001
             bookImage.Source = imageSource;
             var textPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "/books/" + SelectedBook.Text + ".txt");
             Text = File.ReadAllText(textPath, Encoding.GetEncoding(1252));
-            var description = SelectedBook.Author + "\n" + SelectedBook.Name + "\n" + Text;
+            var description = LastRead() + SelectedBook.Author + "\n" + SelectedBook.Name + "\n" + Text;
             bookDescription.Text = description;
 
+        }
+
+        private string LastRead()
+        {
+            using (var db = new EF.Context())
+            {
+                if (!db.Reads.Any(r => r.IdUser == CurrentUser.Id && r.IdBook == SelectedBook.Id))
+                {
+                    return "Вы ещё не читали эту книгу\n";
+                }
+                else
+                {
+                    var read = db.Reads.FirstOrDefault(r => r.IdUser == CurrentUser.Id && r.IdBook == SelectedBook.Id);
+                    return "Последнее чтение: " + read.Date.ToString() + "\n";
+                }
+            }
         }
     }
 }

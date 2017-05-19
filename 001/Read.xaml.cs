@@ -21,31 +21,52 @@ namespace _001
     public partial class Read : Window
     {
         public EF.User CurrentUser { get; set; }
-        public string Text { get; set; }
+        public EF.Book CurrentBook { get; set; }
 
-        public Read(EF.User u, string text)
+        public Read(EF.User u, EF.Book book, string text)
         {
             InitializeComponent();
             CurrentUser = u;
-            Text = text;
-            FlowDocument doc = new FlowDocument(new Paragraph(new Run(Text)));
-
+            CurrentBook = book;
+            FlowDocument doc = new FlowDocument(new Paragraph(new Run(text)));
+            AddRead();
             Rtb.Document = doc;
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddRead()
         {
-            //Shelf shelf2 = new Shelf();
-            //shelf2.Show();
-            //this.Close();
+            using (var db = new EF.Context())
+            {
+                if (!db.Reads.Any(r => r.IdUser == CurrentUser.Id && r.IdBook == CurrentBook.Id))
+                {
+                    var read = new EF.Read()
+                    {
+                        IdBook = CurrentBook.Id,
+                        IdUser = CurrentUser.Id,
+                        Date = DateTime.Now
+                    };
+                    db.Reads.Add(read);                    
+                }
+                else
+                {
+                    var read = db.Reads.FirstOrDefault(r => r.IdUser == CurrentUser.Id && r.IdBook == CurrentBook.Id);
+                    read.Date = DateTime.Now;
+                }
+                db.SaveChanges();
+            }
         }
 
-        
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Shelf shelf2 = new Shelf(CurrentUser);
+            shelf2.Show();
+            this.Close();
+        }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            Bookmark bookmark = new Bookmark();
+            Bookmark bookmark = new Bookmark(CurrentUser, CurrentBook);
             bookmark.Show();
         }
 
@@ -70,27 +91,6 @@ namespace _001
         private void RadioButton_Checked_4(object sender, RoutedEventArgs e)
         {
             Rtb.FontSize = 20;
-        }
-
-        private void RadioButton_Checked_5(object sender, RoutedEventArgs e)
-        {
-            RtbParagraph.TextAlignment = TextAlignment.Left;
-            Rtb.UpdateLayout();
-        }
-        private void RadioButton_Checked_6(object sender, RoutedEventArgs e)
-        {
-            RtbParagraph.TextAlignment = TextAlignment.Center;
-            Rtb.UpdateLayout();
-        }
-        private void RadioButton_Checked_7(object sender, RoutedEventArgs e)
-        {
-            RtbParagraph.TextAlignment = TextAlignment.Right;
-            Rtb.UpdateLayout();
-        }
-        private void RadioButton_Checked_8(object sender, RoutedEventArgs e)
-        {
-            RtbParagraph.TextAlignment = TextAlignment.Justify;
-            Rtb.UpdateLayout();
         }
 
         private void RadioButton_Checked_9(object sender, RoutedEventArgs e)

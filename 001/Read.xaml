@@ -3,55 +3,80 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Read" Height="588" Width="700" WindowStartupLocation="CenterScreen" MaxWidth="1000" MaxHeight="1000" ResizeMode="CanMinimize">
     <Grid>
-        <RichTextBox x:Name="Rtb" Height="386" Margin="63,33,56,0" VerticalAlignment="Top" IsReadOnly="True" IsUndoEnabled="False" UndoLimit="102" Foreground="Black">
-            <FlowDocument>
-                <Paragraph x:Name="RtbParagraph">
-                    <Run Text="{Binding Text}" />
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="538" Height="23"/>
-        <Button Content="Назад" HorizontalAlignment="Left" Margin="0,33,0,0" VerticalAlignment="Top" Width="58" Click="Button_Click" Height="20" Cursor="Hand"/>
-        <Button HorizontalAlignment="Left" Margin="642,0,0,473" VerticalAlignment="Bottom" Width="40" Height="33" BorderBrush="{x:Null}" ToolTip="Закладки" Cursor="Hand" Click="Button_Click_2">
-            <Button.OpacityMask>
-                <ImageBrush ImageSource="bookmark.png"/>
-            </Button.OpacityMask>
-            <Button.Foreground>
-                <ImageBrush ImageSource="bookmark.png" Stretch="UniformToFill"/>
-            </Button.Foreground>
-            <Button.Background>
-                <ImageBrush ImageSource="bookmark.png" Stretch="UniformToFill"/>
-            </Button.Background>
+        <RichTextBox x:Name="Rtb" Margin="63,33,56,140" IsReadOnly="True" IsUndoEnabled="False" UndoLimit="102" Foreground="Black" />
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="538" Height="23" />
+        <Button Content="Назад" HorizontalAlignment="Left" Margin="0,33,0,0" VerticalAlignment="Top" Width="58" Click="Button_Click" Height="20" Cursor="Hand" />
+        <Button Content="🔖" Margin="0,33,10,0" ToolTip="Закладки" Cursor="Hand" Click="Button_Click_2" FontSize="25" HorizontalAlignment="Right" Width="40" Height="33" VerticalAlignment="Top">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="White"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Button.MouseEnter">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation 
+                                          AutoReverse="False" 
+                                          Duration="0:0:0.5" 
+                                          From="Black" To="Crimson"
+                                          AccelerationRatio="1" 
+                                          Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)"
+                                          FillBehavior="HoldEnd">
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseLeave">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation 
+                                          AutoReverse="False" 
+                                          Duration="0:0:0.5" 
+                                          From="Crimson" To="Black"
+                                          AccelerationRatio="1" 
+                                          Storyboard.TargetProperty="(Button.Foreground).(SolidColorBrush.Color)"
+                                          FillBehavior="HoldEnd">
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
         </Button>
-        <GroupBox Header="Размер текста" HorizontalAlignment="Left" Margin="57,424,0,0" VerticalAlignment="Top" Height="110" Width="110">
+        <GroupBox Header="Размер текста" HorizontalAlignment="Left" Margin="57,0,0,25" Width="135" Height="110" VerticalAlignment="Bottom">
             <StackPanel HorizontalAlignment="Left" Height="91" VerticalAlignment="Top" Width="100" Margin="0,0,-2,0">
                 <RadioButton Content="12" HorizontalAlignment="Right" Width="100" Checked="RadioButton_Checked" FontSize="14"/>
-                <RadioButton Content="14" Checked="RadioButton_Checked_1" FontSize="14"/>
-                <RadioButton Content="16" Checked="RadioButton_Checked_2" FontSize="14"/>
-                <RadioButton Content="18" Checked="RadioButton_Checked_3" FontSize="14"/>
-                <RadioButton Content="20" Checked="RadioButton_Checked_4" FontSize="14"/>
+                <RadioButton Content="14" Checked="RadioButton_Checked_1" FontSize="14" />
+                <RadioButton Content="16" Checked="RadioButton_Checked_2" FontSize="14" />
+                <RadioButton Content="18" Checked="RadioButton_Checked_3" FontSize="14" />
+                <RadioButton Content="20" Checked="RadioButton_Checked_4" FontSize="14" />
             </StackPanel>
         </GroupBox>
-        <GroupBox Header="Выравнивание" HorizontalAlignment="Left" Margin="189,424,0,0" VerticalAlignment="Top" Height="99" Width="149">
-            <StackPanel Height="75" Margin="0,-1,-2,0" VerticalAlignment="Top">
-                <RadioButton Content="По левому краю" Checked="RadioButton_Checked_5" FontSize="14"/>
-                <RadioButton Content="По центру" Checked="RadioButton_Checked_6" FontSize="14"/>
-                <RadioButton Content="По правому краю" Checked="RadioButton_Checked_7" FontSize="14"/>
-                <RadioButton Content="По ширине" Checked="RadioButton_Checked_8" FontSize="14"/>
-            </StackPanel>
-        </GroupBox>
-        <GroupBox Header="Шрифт" HorizontalAlignment="Left" Margin="355,424,0,0" VerticalAlignment="Top" Height="88" Width="144">
-            <StackPanel HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="123" Margin="0,0,0,-12">
+        <GroupBox Header="Шрифт" Margin="268,0,0,47" VerticalAlignment="Bottom" Height="88" HorizontalAlignment="Left" Width="164">
+            <StackPanel HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="154" Margin="0,0,-2,-8">
                 <RadioButton Content="Arial" Checked="RadioButton_Checked_9" FontFamily="Arial" FontSize="14" />
-                <RadioButton Content="Times New Roman" FontFamily="Times New Roman" Checked="RadioButton_Checked_10" FontSize="14"/>
-                <RadioButton Content="Century" FontFamily="Century" Checked="RadioButton_Checked_11" FontSize="14"/>
-                <RadioButton Content="Segoe UI" FontFamily="Segoe UI" Checked="RadioButton_Checked_12" FontSize="14"/>
+                <RadioButton Content="Times New Roman" FontFamily="Times New Roman" Checked="RadioButton_Checked_10" FontSize="14" />
+                <RadioButton Content="Century" FontFamily="Century" Checked="RadioButton_Checked_11" FontSize="14" />
+                <RadioButton Content="Segoe UI" FontFamily="Segoe UI" Checked="RadioButton_Checked_12" FontSize="14" />
             </StackPanel>
         </GroupBox>
-        <GroupBox Header="Режим" HorizontalAlignment="Left" Margin="518,424,0,0" VerticalAlignment="Top" Height="63" Width="120">
+        <GroupBox Header="Режим" HorizontalAlignment="Right" Margin="0,0,56,72" VerticalAlignment="Bottom" Height="63" Width="145">
             <StackPanel HorizontalAlignment="Left" Height="32" Margin="0,0,-2,-12" VerticalAlignment="Top" Width="110">
-                <RadioButton Content="Светлый" Checked="RadioButton_Checked_13" FontSize="14"/>
-                <RadioButton Content="Тёмный" Checked="RadioButton_Checked_14" FontSize="14"/>
+                <RadioButton Content="Светлый" Checked="RadioButton_Checked_13" FontSize="14" />
+                <RadioButton Content="Тёмный" Checked="RadioButton_Checked_14" FontSize="14" />
             </StackPanel>
         </GroupBox>
     </Grid>
